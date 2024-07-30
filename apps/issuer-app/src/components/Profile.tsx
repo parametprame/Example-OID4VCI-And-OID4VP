@@ -2,7 +2,7 @@
 import { useQRCode } from "next-qrcode";
 import { User } from "../hooks/useGetUser";
 import useGetVC from "../hooks/useGetVC";
-import { decodeOpenIDUrl } from "../lib/decodeOpenIDUrl";
+import { decodeOpenIDUrl } from "@/app/lib/decodeOpenIDUrl";
 
 export const Profile: React.FC<User> = (props: User) => {
   const { name, faculty, major, status, gpa } = props;

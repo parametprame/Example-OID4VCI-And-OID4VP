@@ -15,7 +15,7 @@ export const Login = () => {
             Standing University
           </h1>
           <p className="text-white mt-1">
-            The most popular university at Somewhere
+            The most popular university at Somewhere.
           </p>
         </div>
       </div>
@@ -25,7 +25,7 @@ export const Login = () => {
             Hello Again!
           </h1>
           <p className="text-sm font-normal text-gray-600 mb-7 text-center md:text-left">
-            Welcome Back
+            Welcome to Standing University.
           </p>
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
             <svg

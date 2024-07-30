@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { SiweMessage } from "siwe";
 import { BrowserProvider } from "ethers";
-import { getCsrfToken, signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 export const Login = () => {
   const [provider, setProvider] = useState<any>(null);
@@ -58,7 +58,7 @@ export const Login = () => {
             Digital Wallet
           </h1>
           <p className="text-white mt-1">
-            The most popular wallet that everyone wants to use!
+            The most popular wallet that everyone wants to use.
           </p>
         </div>
       </div>
@@ -68,7 +68,7 @@ export const Login = () => {
             Hello Again!
           </h1>
           <p className="text-sm font-normal text-gray-600 mb-7 text-center md:text-left">
-            Welcome Back
+            Welcome to Digital Wallet.
           </p>
           <button
             type="button"
