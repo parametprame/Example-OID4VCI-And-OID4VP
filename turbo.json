@@ -1,0 +1,19 @@
+{
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+    },
+    "dev": {
+      "cache": false
+    },
+    "start": {},
+    "lint": {
+      "outputs": []
+    },
+    "test": {
+      "outputs": []
+    }
+  },
+  "globalDependencies": ["**/.env.*local"]
+}
