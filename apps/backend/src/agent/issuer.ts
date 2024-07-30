@@ -28,6 +28,7 @@ export const universityDegreeCredential = {
   id: 'UniversityDegreeCredential',
   format: OpenId4VciCredentialFormatProfile.JwtVcJson,
   types: ['VerifiableCredential', 'UniversityDegreeCredential'],
+  cryptographic_binding_methods_supported: ['did:key'],
 } satisfies OpenId4VciCredentialSupportedWithId;
 
 export const credentialsSupported = [
@@ -39,8 +40,8 @@ function getCredentialRequestToCredentialMapper({
 }: {
   issuerDidKey: DidKey;
 }): OpenId4VciCredentialRequestToCredentialMapper {
-  return async ({ holderBinding, credentialConfigurationIds }) => {
-    const credentialConfigurationId = credentialConfigurationIds[0];
+  return async ({ holderBinding, credentialOffer }) => {
+    const credentialConfigurationId = credentialOffer[0];
 
     if (credentialConfigurationId === universityDegreeCredential.id) {
       assertDidBasedHolderBinding(holderBinding);
