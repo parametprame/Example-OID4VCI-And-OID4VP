@@ -6,7 +6,7 @@ import Link from "next/link";
 export const NavBar = () => {
   return (
     <div className="bg-gray-900">
-      <div className="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto flex h-16 items-center gap-8 px-6">
         <Link className="block text-indigo-300" href={"/"}>
           <span className="sr-only">Home</span>
           <p className="font-bold text-xl">
