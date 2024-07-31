@@ -18,10 +18,10 @@ const useResolveCredential = () => {
         const data = await response.json();
         return data;
       } else {
-        setError("Login failed: " + response.statusText);
+        setError("Resolve credential failed: " + response.statusText);
       }
     } catch (error) {
-      setError("Error during login: " + (error as Error).message);
+      setError("Error during Resolve credential: " + (error as Error).message);
     }
   };
 
