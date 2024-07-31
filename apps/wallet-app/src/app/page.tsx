@@ -1,11 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "./api/auth/options";
+import { MyAccount } from "@/components/profile/MyAccount";
 
 const Home = async () => {
-  const session = await getServerSession(authOptions);
-  const user = session?.user;
   return (
     <div className="container mx-auto px-4 py-10">
       <div className="w-full bg-gradient-to-tr from-blue-200 to-purple-200 rounded-2xl py-20">
@@ -30,27 +26,7 @@ const Home = async () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col mt-3 md:mt-10">
-        <h3 className="font-bold font-sans text-2xl">My accounts</h3>
-
-        <div className="bg-[#d5defb] w-full md:w-1/3 h-56 mt-10 rounded-lg">
-          <div className="bg-[#f8f7fc] rounded-lg py-6 m-2">
-            <p className="px-10 font-bold font-sans">Wallet 1</p>
-            <p className="px-10 font-extralight font-sans break-all">
-              {user?.name}
-            </p>
-          </div>
-          <div className="flex flex-row justify-center w-full">
-            <Link
-              href={`https://etherscan.io/address/${user?.name}`}
-              target="_blank"
-              className="bg-gray-800 text-white font-extralight text-thin px-10 py-2 font-sans rounded-lg mt-5"
-            >
-              View balances
-            </Link>
-          </div>
-        </div>
-      </div>
+      <MyAccount />
     </div>
   );
 };

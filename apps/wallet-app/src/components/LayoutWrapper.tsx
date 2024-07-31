@@ -1,12 +1,12 @@
 "use client";
 import { useSession } from "next-auth/react";
 import React from "react";
-import { NavBar } from "./NavBar";
-import { Loading } from "./Loading";
-import { Login } from "./Login";
+import { NavBar } from "./common/NavBar";
+import { Loading } from "./common/Loading";
+import { Login } from "./common/Login";
 
 const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
-  const { status, data } = useSession();
+  const { status } = useSession();
   if (status === "loading") {
     return <Loading />;
   }

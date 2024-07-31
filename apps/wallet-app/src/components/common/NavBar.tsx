@@ -7,7 +7,7 @@ export const NavBar = () => {
   return (
     <div className="bg-gray-900">
       <div className="container mx-auto flex h-16 items-center gap-8 px-6">
-        <Link className="block text-indigo-300" href={"/"}>
+        <Link className="block text-[rgb(255,120,90)]" href={"/"}>
           <span className="sr-only">Home</span>
           <p className="font-bold text-xl">
             Digital <span className="text-white">Wallet</span>
@@ -49,7 +49,7 @@ export const NavBar = () => {
           <div className="flex items-center gap-4">
             <div className="sm:flex">
               <button
-                className="block rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-500"
+                className="block rounded-md bg-[#FF5733] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#fa9e89]"
                 onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
               >
                 Logout
