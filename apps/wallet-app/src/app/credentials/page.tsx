@@ -5,7 +5,6 @@ export default async function CredentialPage() {
     <div className="container mx-auto px-6 py-10">
       <div className="flex flex-col gap-5">
         <YourCredentials />
-        <div className="w-full h-0.5 bg-black"></div>
       </div>
     </div>
   );
