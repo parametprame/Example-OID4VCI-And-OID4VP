@@ -21,7 +21,7 @@ model Holder {
 
 model CredentialOffer {
   id       String  @id @default(cuid())
-  metadata String
+  metadata Bytes
   holder   Holder? @relation(fields: [holderId], references: [id])
   holderId String?
 }
