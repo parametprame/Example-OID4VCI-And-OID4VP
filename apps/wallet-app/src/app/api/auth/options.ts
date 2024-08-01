@@ -1,5 +1,4 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import { SiweMessage } from "siwe";
 import { NextAuthOptions } from "next-auth";
 
 export const authOptions: NextAuthOptions = {
@@ -12,19 +11,28 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         try {
-          const siwe = new SiweMessage(
-            JSON.parse(credentials?.message || "{}")
-          );
           const nextAuthUrl = new URL(process.env.NEXTAUTH_URL!);
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_HOLDER_URL}/signIn`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                message: credentials?.message,
+                signature: credentials?.signature,
+                domain: nextAuthUrl.host,
+              }),
+            }
+          );
 
-          const result = await siwe.verify({
-            signature: credentials?.signature || "",
-            domain: nextAuthUrl.host,
-          });
+          const data = await res.json();
 
-          if (result.success) {
-            return { id: siwe.address };
+          if (res.ok && data.address) {
+            return { id: data.address };
           }
+
           return null;
         } catch (e) {
           return null;
