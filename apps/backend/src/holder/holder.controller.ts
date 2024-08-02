@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpStatus,
   NotFoundException,
@@ -45,7 +46,6 @@ export class HolderController {
       const address = await this.userService.signIn(message, signature, domain);
       return res.status(HttpStatus.OK).json({ address });
     } catch (error) {
-      console.log(error);
       if (error instanceof NotFoundException) {
         return res
           .status(HttpStatus.NOT_FOUND)
@@ -54,6 +54,21 @@ export class HolderController {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .json({ message: 'INTERNAL_SERVER_ERROR' });
+    }
+  }
+
+  @Delete('reject-credential-offer/:id/:address')
+  async rejectCredentialOffer(@Param() params, @Res() res) {
+    try {
+      const { id, address } = params;
+      await this.holderService.rejectCredential(address, id);
+      return res.status(HttpStatus.OK).json();
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return res
+          .status(HttpStatus.NOT_FOUND)
+          .json({ message: 'NotFoundException' });
+      }
     }
   }
 

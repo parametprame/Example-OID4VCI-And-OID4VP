@@ -19,7 +19,7 @@ export const YourCredentials = () => {
 
   const { data, isLoading } = useQuery({
     queryFn: async () => await handleRequestCredentialOffer(),
-    queryKey: ["holder"],
+    queryKey: ["credentialOffer"],
   });
 
   const handleReceiveCredential = async (
@@ -27,7 +27,9 @@ export const YourCredentials = () => {
   ) => {
     event.preventDefault();
     await handleResolveCredential(uri);
-    await queryClient.refetchQueries();
+    await queryClient.refetchQueries({
+      queryKey: ["credentialOffer"],
+    });
     setUri("");
     handleModal();
   };
@@ -63,6 +65,7 @@ export const YourCredentials = () => {
               return (
                 <div key={index}>
                   <OfferCredentialCard
+                    id={cre.id}
                     display={cre.metadata.credentialIssuerMetadata.display}
                     credentialIssuer={
                       cre.credentialOfferPayload.credential_issuer
