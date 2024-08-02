@@ -42,6 +42,22 @@ export class HolderService {
     return metadata;
   }
 
+  async rejectCredential(address: string, id: string) {
+    try {
+      await this.prisma.credentialOffer.delete({
+        where: {
+          id,
+          holderId: address,
+        },
+      });
+    } catch (error) {
+      if (error.code === 'P2025') {
+        throw new NotFoundException();
+      }
+      throw error;
+    }
+  }
+
   async getCredentialOfferByAddress(address: string) {
     const holder = await this.prisma.holder.findUnique({
       where: { id: address },
@@ -57,7 +73,10 @@ export class HolderService {
     const credentialOffers = holder.credentialOffer.map((cre) => {
       const decodedString = cre.metadata.toString('utf-8');
       const decodedJsonObject = JSON.parse(decodedString);
-      return decodedJsonObject;
+      return {
+        id: cre.id,
+        ...decodedJsonObject,
+      };
     });
 
     return credentialOffers;
