@@ -69,8 +69,9 @@ export class Holder extends BaseAgent<
       });
 
     const storedCredentials = await Promise.all(
-      credentialResponse.map((response) => {
+      credentialResponse.map(async (response) => {
         const credential = response.credential;
+
         if (
           credential instanceof W3cJwtVerifiableCredential ||
           credential instanceof W3cJsonLdVerifiableCredential

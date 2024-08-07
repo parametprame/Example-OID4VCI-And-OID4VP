@@ -1,7 +1,6 @@
 import useRejectCredentialOffer from "@/hooks/useRejectCredentialOffer";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-//    queryKey: ["credentialOffer"],
+import useReceiveCredential from "../../hooks/useReceiveCredentialOffer";
 
 interface Props {
   display: any[];
@@ -15,13 +14,27 @@ export const OfferCredentialCard = ({
   id,
 }: Props) => {
   const { handleRejectCredentialOffer } = useRejectCredentialOffer();
+  const { handleReceiveCredential } = useReceiveCredential();
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
+  const mutationRejectCredentialOffer = useMutation({
     mutationFn: async (id: string) => await handleRejectCredentialOffer(id),
     onSuccess: () => {
       queryClient.refetchQueries({
         queryKey: ["credentialOffer"],
+      });
+    },
+  });
+
+  const mutationReceiveCredentialOffer = useMutation({
+    mutationFn: async (credentialOfferId: string) =>
+      await handleReceiveCredential(credentialOfferId),
+    onSuccess: () => {
+      queryClient.refetchQueries({
+        queryKey: ["credentialOffer"],
+      });
+      queryClient.refetchQueries({
+        queryKey: ["credentials"],
       });
     },
   });
@@ -42,12 +55,15 @@ export const OfferCredentialCard = ({
       </p>
       <div className="flex px-5 mt-5 justify-between">
         <button
-          onClick={() => mutation.mutate(id)}
+          onClick={() => mutationRejectCredentialOffer.mutate(id)}
           className="inline-flex justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-red-700 hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
         >
           Reject
         </button>
-        <button className="inline-flex justify-center rounded-md border border-transparent bg-indigo-100 px-4 py-2 text-sm font-medium text-indigo-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2">
+        <button
+          onClick={() => mutationReceiveCredentialOffer.mutate(id)}
+          className="inline-flex justify-center rounded-md border border-transparent bg-indigo-100 px-4 py-2 text-sm font-medium text-indigo-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+        >
           Receive
         </button>
       </div>

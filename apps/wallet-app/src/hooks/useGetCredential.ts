@@ -1,14 +1,14 @@
 import { useSession } from "next-auth/react";
 
-const useGetCredentialOffer = () => {
+const useGetCredential = () => {
   const { data } = useSession();
 
   const HOLDER_URL = process.env.NEXT_PUBLIC_HOLDER_URL!;
 
-  const handleRequestCredentialOffer = async () => {
+  const handleRequestCredential = async (id: string) => {
     try {
       const response = await fetch(
-        `${HOLDER_URL}/credential-offer/${data?.user?.name}`,
+        `${HOLDER_URL}/credential/${id}/${data?.user?.name}`,
         {
           method: "GET",
         }
@@ -23,8 +23,8 @@ const useGetCredentialOffer = () => {
   };
 
   return {
-    handleRequestCredentialOffer,
+    handleRequestCredential,
   };
 };
 
-export default useGetCredentialOffer;
+export default useGetCredential;

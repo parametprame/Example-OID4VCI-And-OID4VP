@@ -11,6 +11,6 @@ import { customRouter } from './customRoute';
 })
 export class IssuerModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(customRouter).forRoutes('issuer/openid4vci');
+    consumer.apply(customRouter).forRoutes('issuer/oid4vci');
   }
 }
