@@ -12,12 +12,12 @@ interface Props {
 export const YourCredential = ({ id }: Props) => {
   const { handleRequestCredential } = useGetCredential();
 
-  const { data: credential, isLoading: credentialLoading } = useQuery({
+  const { data: credential, isLoading } = useQuery({
     queryFn: async () => await handleRequestCredential(id),
     queryKey: ["credential"],
   });
 
-  if (credentialLoading) {
+  if (isLoading) {
     return <Loading />;
   }
 
