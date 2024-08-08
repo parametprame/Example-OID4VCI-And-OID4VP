@@ -3,6 +3,10 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "build:docker:backend": "docker build -f apps/backend/Dockerfile . -t example-openid/backend",
+    "build:docker:issuer-app": "docker build -f apps/issuer-app/Dockerfile . -t example-openid/issuer-app",
+    "build:docker:verifier-app": "docker build -f apps/verifier-app/Dockerfile . -t example-openid/verifier-app",
+    "build:docker:wallet-app": "docker build -f apps/wallet-app/Dockerfile . -t example-openid/wallet-app",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
