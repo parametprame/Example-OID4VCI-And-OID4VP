@@ -1,0 +1,20 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./apps/backend/Dockerfile
+
+  issuer-app:
+    build:
+      context: .
+      dockerfile: ./apps/issuer-app/Dockerfile
+
+  verifier-app:
+    build:
+      context: .
+      dockerfile: ./apps/verifier-app/Dockerfile
+
+  wallet-app:
+    build:
+      context: .
+      dockerfile: ./apps/wallet-app/Dockerfile
