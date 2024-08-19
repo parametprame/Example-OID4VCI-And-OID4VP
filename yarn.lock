@@ -521,7 +521,7 @@
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
   integrity sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==
 
-"@credo-ts/askar@^0.5.7":
+"@credo-ts/askar@^0.5.9":
   version "0.5.9"
   resolved "https://registry.yarnpkg.com/@credo-ts/askar/-/askar-0.5.9.tgz#62d6b458870f667283bd5cac9b1806886a9364c2"
   integrity sha512-rnsjLgkzn+mk73kQfssmQixZ64Tjf3DCHcBIDmmUUqX43u6hxTYy/ZWAXfdqOJaffSito2qlNSToQ79S2E13lQ==
@@ -579,7 +579,7 @@
     web-did-resolver "^2.0.21"
     webcrypto-core "^1.8.0"
 
-"@credo-ts/node@^0.5.7":
+"@credo-ts/node@^0.5.9":
   version "0.5.9"
   resolved "https://registry.yarnpkg.com/@credo-ts/node/-/node-0.5.9.tgz#de1d93267bc8d00f09eb7403cd28d6ac2dc83912"
   integrity sha512-WpAYSDT6mymXolqCq2hUrP+32UtHnMrlf4BTTxUXaz7VULHZxs0/nP1/dLz7tzwFgGss1YA6cmAK6G1oCR+yWg==
@@ -591,7 +591,7 @@
     express "^4.17.1"
     ws "^8.13.0"
 
-"@credo-ts/openid4vc@^0.5.7":
+"@credo-ts/openid4vc@^0.5.9":
   version "0.5.9"
   resolved "https://registry.yarnpkg.com/@credo-ts/openid4vc/-/openid4vc-0.5.9.tgz#affc6755b9efac9bb470701f2770c782a56c37a9"
   integrity sha512-yvUEkXhxejbQlfe4DaeL3tDMM9KUjq/p2xNWwZfn3JMJq6HW1YAuDPDXXYdEv3bCqRnH2nLusFXKwCdCAWgLJw==
@@ -7805,10 +7805,17 @@ qs@6.11.0:
   dependencies:
     side-channel "^1.0.4"
 
-qs@^6.11.0, qs@^6.11.2:
+qs@^6.11.0:
   version "6.12.3"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.12.3.tgz#e43ce03c8521b9c7fd7f1f13e514e5ca37727754"
   integrity sha512-AWJm14H1vVaO/iNZ4/hO+HyaTehuy9nRqVdkTqlJt0HWvBiBIEXFmb4C0DGeYo3Xes9rrEW+TxHsaigCbN5ICQ==
+  dependencies:
+    side-channel "^1.0.6"
+
+qs@^6.11.2:
+  version "6.13.0"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.13.0.tgz#6ca3bd58439f7e245655798997787b0d88a51906"
+  integrity sha512-+38qI9SOr8tfZ4QmJNplMUxqjbe7LKvvZgWdExBOmd+egZTtjLB67Gu0HRX3u/XOq7UU2Nx6nsjvS16Z9uwfpg==
   dependencies:
     side-channel "^1.0.6"
 

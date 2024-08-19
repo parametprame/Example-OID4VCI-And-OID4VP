@@ -28,10 +28,16 @@ export const universityDegreeCredential = {
   id: 'UniversityDegreeCredential',
   format: OpenId4VciCredentialFormatProfile.JwtVcJson,
   types: ['VerifiableCredential', 'UniversityDegreeCredential'],
-  cryptographic_binding_methods_supported: ['did:key'],
+} satisfies OpenId4VciCredentialSupportedWithId;
+
+export const universityDegreeCredentialSdJwt = {
+  id: 'UniversityDegreeCredential-sdjwt',
+  format: OpenId4VciCredentialFormatProfile.SdJwtVc,
+  vct: 'UniversityDegreeCredential',
 } satisfies OpenId4VciCredentialSupportedWithId;
 
 export const credentialsSupported = [
+  universityDegreeCredentialSdJwt,
   universityDegreeCredential,
 ] satisfies OpenId4VciCredentialSupportedWithId[];
 
@@ -40,8 +46,8 @@ function getCredentialRequestToCredentialMapper({
 }: {
   issuerDidKey: DidKey;
 }): OpenId4VciCredentialRequestToCredentialMapper {
-  return async ({ holderBinding, credentialOffer }) => {
-    const credentialConfigurationId = credentialOffer[0];
+  return async ({ holderBinding, credentialConfigurationIds }) => {
+    const credentialConfigurationId = credentialConfigurationIds[0];
 
     if (credentialConfigurationId === universityDegreeCredential.id) {
       assertDidBasedHolderBinding(holderBinding);
@@ -63,6 +69,25 @@ function getCredentialRequestToCredentialMapper({
       };
     }
 
+    if (credentialConfigurationId === universityDegreeCredentialSdJwt.id) {
+      return {
+        credentialSupportedId: universityDegreeCredentialSdJwt.id,
+        format: ClaimFormat.SdJwtVc,
+        payload: {
+          vct: universityDegreeCredentialSdJwt.vct,
+          university: 'Standing University',
+          degree: 'bachelor',
+          fullName: 'Steve Rogers',
+        },
+        holder: holderBinding,
+        issuer: {
+          method: 'did',
+          didUrl: `${issuerDidKey.did}#${issuerDidKey.key.fingerprint}`,
+        },
+        disclosureFrame: { _sd: ['university', 'fullName'] },
+      };
+    }
+
     throw new Error('Invalid request');
   };
 }
@@ -81,7 +106,7 @@ export class Issuer extends BaseAgent<{
       modules: {
         askar: new AskarModule({ ariesAskar }),
         openId4VcIssuer: new OpenId4VcIssuerModule({
-          baseUrl: `http://localhost:${port}/issuer/openid4vci`,
+          baseUrl: `http://localhost:${port}/issuer/oid4vci`,
           router: customRouter,
           endpoints: {
             credential: {

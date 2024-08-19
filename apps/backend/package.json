@@ -20,9 +20,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@credo-ts/askar": "^0.5.7",
-    "@credo-ts/node": "^0.5.7",
-    "@credo-ts/openid4vc": "^0.5.7",
+    "@credo-ts/askar": "^0.5.9",
+    "@credo-ts/node": "^0.5.9",
+    "@credo-ts/openid4vc": "^0.5.9",
     "@hyperledger/anoncreds-nodejs": "^0.2.2",
     "@hyperledger/aries-askar-nodejs": "^0.2.3",
     "@hyperledger/indy-vdr-nodejs": "^0.2.2",

@@ -39,12 +39,11 @@ export class IssuerController {
     const { id } = body;
     try {
       const vc = await this.issuerService.createCredentialOffer(
-        ['UniversityDegreeCredential'],
+        ['UniversityDegreeCredential-sdjwt'],
         id,
       );
       return res.status(HttpStatus.OK).json({ credentials: vc });
     } catch (error) {
-      console.log(error);
       if (error instanceof NotFoundException) {
         return res
           .status(HttpStatus.NOT_FOUND)

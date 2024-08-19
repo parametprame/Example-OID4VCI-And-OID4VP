@@ -17,11 +17,21 @@ model Holder {
   id              String            @id @unique
   address         String            @unique
   credentialOffer CredentialOffer[]
+  Credential      Credential[]
 }
 
 model CredentialOffer {
-  id       String  @id @default(cuid())
-  metadata Bytes
-  holder   Holder? @relation(fields: [holderId], references: [id])
-  holderId String?
+  id        String  @id @default(cuid())
+  metadata  Bytes
+  isClaimed Boolean @default(false)
+  holder    Holder? @relation(fields: [holderId], references: [id])
+  holderId  String?
+}
+
+model Credential {
+  id         String  @id @default(cuid())
+  credential Bytes
+  metadata   Bytes
+  holder     Holder? @relation(fields: [holderId], references: [id])
+  holderId   String?
 }
