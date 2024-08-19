@@ -8,6 +8,7 @@ import {
   W3cJwtVerifiableCredential,
   W3cJsonLdVerifiableCredential,
   DifPresentationExchangeService,
+  JwaSignatureAlgorithm,
 } from '@credo-ts/core';
 import { OpenId4VcHolderModule } from '@credo-ts/openid4vc';
 import { ariesAskar } from '@hyperledger/aries-askar-nodejs';
@@ -66,11 +67,19 @@ export class Holder extends BaseAgent<
           method: 'did',
           didUrl: this.verificationMethod.id,
         }),
+        allowedProofOfPossessionSignatureAlgorithms: [
+          // NOTE: MATTR launchpad for JFF MUST use EdDSA. So it is important that the default (first allowed one)
+          // is EdDSA. The list is ordered by preference, so if no suites are defined by the issuer, the first one
+          // will be used
+          JwaSignatureAlgorithm.EdDSA,
+          JwaSignatureAlgorithm.ES256,
+        ],
       });
 
     const storedCredentials = await Promise.all(
-      credentialResponse.map((response) => {
+      credentialResponse.map(async (response) => {
         const credential = response.credential;
+
         if (
           credential instanceof W3cJwtVerifiableCredential ||
           credential instanceof W3cJsonLdVerifiableCredential

@@ -8,6 +8,8 @@ import useGetCredentialOffer from "@/hooks/useGetCredentialOffer";
 import { Loading } from "../common/Loading";
 import { useModal } from "@/hooks/useModal";
 import { OfferCredentialCard } from "./OfferCredentialCard";
+import useGetCredentials from "@/hooks/useGetCredentials";
+import { CredentialCard } from "./CredentialCard";
 
 export const YourCredentials = () => {
   const [uri, setUri] = useState<string>("");
@@ -15,11 +17,18 @@ export const YourCredentials = () => {
   const { isOpen, handleModal } = useModal();
   const { handleResolveCredential } = useResolveCredential();
   const { handleRequestCredentialOffer } = useGetCredentialOffer();
+  const { handleRequestCredentials } = useGetCredentials();
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery({
-    queryFn: async () => await handleRequestCredentialOffer(),
-    queryKey: ["credentialOffer"],
+  const { data: credentialsOffer, isLoading: credentialsOfferLoding } =
+    useQuery({
+      queryFn: async () => await handleRequestCredentialOffer(),
+      queryKey: ["credentialOffer"],
+    });
+
+  const { data: credentials, isLoading: credentialsLoading } = useQuery({
+    queryFn: async () => await handleRequestCredentials(),
+    queryKey: ["credentials"],
   });
 
   const handleReceiveCredential = async (
@@ -34,7 +43,7 @@ export const YourCredentials = () => {
     handleModal();
   };
 
-  if (isLoading) {
+  if (credentialsOfferLoding || credentialsLoading) {
     return <Loading />;
   }
 
@@ -57,19 +66,39 @@ export const YourCredentials = () => {
         />
       </div>
       <div className="w-full h-0.5 bg-black"></div>
-      {data && data.length > 0 && (
+      {credentialsOffer && credentialsOffer.length > 0 && (
+        <>
+          <div className="flex flex-col gap-5">
+            <h3 className="font-bold"> New Credential Offer ! </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+              {credentialsOffer.map((cre: any, index: number) => {
+                return (
+                  <div key={index}>
+                    <OfferCredentialCard
+                      id={cre.id}
+                      display={cre.metadata.credentialIssuerMetadata.display}
+                      credentialIssuer={
+                        cre.credentialOfferPayload.credential_issuer
+                      }
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="w-full h-0.5 bg-black"></div>
+        </>
+      )}
+      {credentials && credentials.length > 0 && (
         <div className="flex flex-col gap-5">
-          <h3 className="font-bold"> New Credential Offer ! </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-            {data.map((cre: any, index: number) => {
+            {credentials.map((cre: any, index: number) => {
               return (
                 <div key={index}>
-                  <OfferCredentialCard
+                  <CredentialCard
                     id={cre.id}
-                    display={cre.metadata.credentialIssuerMetadata.display}
-                    credentialIssuer={
-                      cre.credentialOfferPayload.credential_issuer
-                    }
+                    fullName={cre.fullName}
+                    university={cre.university}
                   />
                 </div>
               );
