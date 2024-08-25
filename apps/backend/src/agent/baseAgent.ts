@@ -10,9 +10,11 @@ import {
   DidKey,
   HttpOutboundTransport,
   KeyType,
+  LogLevel,
   WsOutboundTransport,
 } from '@credo-ts/core';
 import { agentDependencies } from '@credo-ts/node';
+import { appLogger } from './logger';
 
 export class BaseAgent<AgentModules extends ModulesMap> {
   public port: number;
@@ -41,6 +43,7 @@ export class BaseAgent<AgentModules extends ModulesMap> {
     const config = {
       label: name,
       walletConfig: { id: name, key: privateKey },
+      logger: appLogger(LogLevel.debug),
     } satisfies InitConfig;
 
     this.config = config;
