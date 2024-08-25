@@ -1,5 +1,4 @@
 import { ariesAskar } from '@hyperledger/aries-askar-nodejs';
-import type { DidKey } from '@credo-ts/core';
 import type {
   OpenId4VcCredentialHolderBinding,
   OpenId4VcCredentialHolderDidBinding,
@@ -22,7 +21,7 @@ import {
   OpenId4VcIssuerModule,
   OpenId4VciCredentialFormatProfile,
 } from '@credo-ts/openid4vc';
-import { BaseAgent } from './baseAgent';
+import { BaseAgetWeb } from './baseAgentWeb';
 
 export const universityDegreeCredential = {
   id: 'UniversityDegreeCredential',
@@ -42,9 +41,9 @@ export const credentialsSupported = [
 ] satisfies OpenId4VciCredentialSupportedWithId[];
 
 function getCredentialRequestToCredentialMapper({
-  issuerDidKey,
+  didId,
 }: {
-  issuerDidKey: DidKey;
+  didId: string;
 }): OpenId4VciCredentialRequestToCredentialMapper {
   return async ({ holderBinding, credentialConfigurationIds }) => {
     const credentialConfigurationId = credentialConfigurationIds[0];
@@ -58,14 +57,14 @@ function getCredentialRequestToCredentialMapper({
         credential: new W3cCredential({
           type: universityDegreeCredential.types,
           issuer: new W3cIssuer({
-            id: issuerDidKey.did,
+            id: didId,
           }),
           credentialSubject: new W3cCredentialSubject({
             id: parseDid(holderBinding.didUrl).did,
           }),
           issuanceDate: w3cDate(Date.now()),
         }),
-        verificationMethod: `${issuerDidKey.did}#${issuerDidKey.key.fingerprint}`,
+        verificationMethod: didId,
       };
     }
 
@@ -83,7 +82,7 @@ function getCredentialRequestToCredentialMapper({
         holder: holderBinding,
         issuer: {
           method: 'did',
-          didUrl: `${issuerDidKey.did}#${issuerDidKey.key.fingerprint}`,
+          didUrl: 'did:web:skounis.github.io#owner',
         },
         disclosureFrame: { _sd: ['degree', 'university', 'fullName'] },
       };
@@ -93,7 +92,7 @@ function getCredentialRequestToCredentialMapper({
   };
 }
 
-export class Issuer extends BaseAgent<{
+export class Issuer extends BaseAgetWeb<{
   askar: AskarModule;
   openId4VcIssuer: OpenId4VcIssuerModule;
 }> {
@@ -103,7 +102,8 @@ export class Issuer extends BaseAgent<{
     super({
       port,
       name,
-      privateKey: 'ISSUER_PRIVATE_KEY', // Issuer private key
+      privateKey:
+        '8eb63d435de4d634bc5f3df79c361e9233f55c9c2fca097758eefb018c4c61df', // Issuer private key
       modules: {
         askar: new AskarModule({ ariesAskar }),
         openId4VcIssuer: new OpenId4VcIssuerModule({
@@ -113,7 +113,7 @@ export class Issuer extends BaseAgent<{
             credential: {
               credentialRequestToCredentialMapper: (...args) =>
                 getCredentialRequestToCredentialMapper({
-                  issuerDidKey: this.didKey,
+                  didId: this.did,
                 })(...args),
             },
           },

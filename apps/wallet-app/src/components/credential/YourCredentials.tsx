@@ -55,7 +55,7 @@ export const YourCredentials = () => {
           onClick={handleModal}
           className="bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-500 rounded-md px-5 py-2.5"
         >
-          Receive credentials
+          Receive or Present credentials
         </button>
         <Modal
           isOpen={isOpen}
@@ -97,6 +97,7 @@ export const YourCredentials = () => {
                 <div key={index}>
                   <CredentialCard
                     id={cre.id}
+                    iss={cre.iss}
                     fullName={cre.fullName}
                     university={cre.university}
                   />

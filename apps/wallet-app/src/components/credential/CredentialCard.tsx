@@ -6,9 +6,10 @@ interface Props {
   id: string;
   fullName: string;
   university: string;
+  iss: string;
 }
 
-export const CredentialCard = ({ id, fullName, university }: Props) => {
+export const CredentialCard = ({ id, fullName, university, iss }: Props) => {
   const { handleDeleteCredential } = useDeleteCredential();
   const queryClient = useQueryClient();
 
@@ -25,6 +26,9 @@ export const CredentialCard = ({ id, fullName, university }: Props) => {
     <div className="border px-5 py-5 rounded-xl">
       <p className="px-5 font-extralight font-sans break-all">
         <span className="font-bold">ID:</span> {id}
+      </p>
+      <p className="px-5 font-extralight font-sans break-all">
+        <span className="font-bold">Issuer DID:</span> {iss}
       </p>
       <p className="px-5 font-extralight font-sans break-all">
         <span className="font-bold">University:</span> {university}
