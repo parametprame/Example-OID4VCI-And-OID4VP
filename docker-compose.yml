@@ -3,18 +3,43 @@ services:
     build:
       context: .
       dockerfile: ./apps/backend/Dockerfile
+    hostname: openid-backend
+    networks:
+      - example-openid
+    # ports:
+    #  host:target
 
   issuer-app:
     build:
       context: .
       dockerfile: ./apps/issuer-app/Dockerfile
+    hostname: issuer-frontend
+    networks:
+      - example-openid
+    # ports:
+    #  host:target
 
   verifier-app:
     build:
       context: .
       dockerfile: ./apps/verifier-app/Dockerfile
+    hostname: verifier-frontend
+    networks:
+      - example-openid
+    # ports:
+    #  host:target
 
   wallet-app:
     build:
       context: .
       dockerfile: ./apps/wallet-app/Dockerfile
+    hostname: wallet-frontend
+    networks:
+      - example-openid
+    # ports:
+    #  host:target
+
+networks:
+  example-openid:
+    driver: bridge
+
