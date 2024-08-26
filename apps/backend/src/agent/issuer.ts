@@ -7,7 +7,7 @@ import type {
   OpenId4VciCredentialSupportedWithId,
   OpenId4VcIssuerRecord,
 } from '@credo-ts/openid4vc';
-import { customRouter } from 'src/issuer/customRoute';
+import { customRouterIsuer } from 'src/agent/customRoute';
 import { AskarModule } from '@credo-ts/askar';
 import {
   ClaimFormat,
@@ -79,12 +79,13 @@ function getCredentialRequestToCredentialMapper({
           degree: 'bachelor',
           fullName: 'Steve Rogers',
         },
+
         holder: holderBinding,
         issuer: {
           method: 'did',
           didUrl: `${issuerDidKey.did}#${issuerDidKey.key.fingerprint}`,
         },
-        disclosureFrame: { _sd: ['university', 'fullName'] },
+        disclosureFrame: { _sd: ['degree', 'university', 'fullName'] },
       };
     }
 
@@ -107,7 +108,7 @@ export class Issuer extends BaseAgent<{
         askar: new AskarModule({ ariesAskar }),
         openId4VcIssuer: new OpenId4VcIssuerModule({
           baseUrl: `http://localhost:${port}/issuer/oid4vci`,
-          router: customRouter,
+          router: customRouterIsuer,
           endpoints: {
             credential: {
               credentialRequestToCredentialMapper: (...args) =>
